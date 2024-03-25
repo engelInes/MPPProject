@@ -77,7 +77,7 @@ export function AddBookPage() {
                     authorInput={authorInput}
                     genreInput={genreInput}
                     urlInput={urlInput}
-                    data-testid='user-form'
+                    data-testid='book-form'
                 />
 
                 <Button

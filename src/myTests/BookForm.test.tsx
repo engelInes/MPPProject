@@ -5,7 +5,7 @@ import {BookForm} from '../features/CRUD/Book Form/BookForm';
 import React from 'react';
 import {Book} from '../models/Book';
 
-test('testing rendering of user form without user', () => {
+test('testing rendering of book form without book', () => {
     let idInput = React.createRef<HTMLInputElement>();
     let titleInput = React.createRef<HTMLInputElement>();
     let authorInput = React.createRef<HTMLInputElement>();
@@ -22,7 +22,7 @@ test('testing rendering of user form without user', () => {
         />,
     );
 
-    const renderedBookForm = screen.getByTestId('user-form');
+    const renderedBookForm = screen.getByTestId('book-form');
     const idFormInput = screen.getByPlaceholderText('ID');
     const titleFormInput = screen.getByPlaceholderText('Title');
     const authorFormLabel = screen.getByText('Author');
@@ -37,7 +37,7 @@ test('testing rendering of user form without user', () => {
     expect(urlFormLabel).toBeInTheDocument();
 });
 
-test('testing rendering of user form with user', () => {
+test('testing rendering of book form with book', () => {
     let idInput = React.createRef<HTMLInputElement>();
     let titleInput = React.createRef<HTMLInputElement>();
     let authorInput = React.createRef<HTMLInputElement>();
@@ -63,7 +63,7 @@ test('testing rendering of user form with user', () => {
         />,
     );
 
-    const renderedBookForm = screen.getByTestId('user-form');
+    const renderedBookForm = screen.getByTestId('book-form');
     const idFormInput = screen.getByDisplayValue('1');
     const titleFormInput = screen.getByDisplayValue('Walter Isaacson');
     const idFormLabel = screen.getByText('ID');

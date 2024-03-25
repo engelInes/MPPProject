@@ -12,18 +12,14 @@ export function Layout({children}: any) {
                 <Link to='/' className='link'>
                     Show my books
                 </Link>
-                <Link to='/addUser' className='link'>
+                <Link to='/addBook' className='link'>
                     Add a book
                 </Link>
+                <Link to='/charts' className='link'>
+                    Statistics
+                </Link>
             </div>
-            <div className='content'>
-                {/* <Header /> */}
-                {children}
-            </div>
-
-            {/*{children}
-
-            <Footer /> */}
+            <div className='content'>{children}</div>
         </div>
     );
 }

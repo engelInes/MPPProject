@@ -77,7 +77,7 @@ export function BookForm(props: BookFormType) {
     const formEntries = createFormEntries(props);
 
     return (
-        <div className='form-div' data-testid='user-form'>
+        <div className='form-div' data-testid='book-form'>
             <form className='book-form'>
                 {formEntries.map((entry) => (
                     <FormEntry

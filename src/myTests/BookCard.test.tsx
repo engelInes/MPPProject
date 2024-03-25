@@ -5,9 +5,9 @@ import {BookCard} from '../features/Display Books/BookCard';
 import {Book} from '../models/Book';
 import {BrowserRouter} from 'react-router-dom';
 
-const {mockedUseNavigate} = vi.hoisted(() => {
+const {mockedNavigate} = vi.hoisted(() => {
     return {
-        mockedUseNavigate: vi.fn(),
+        mockedNavigate: vi.fn(),
     };
 });
 
@@ -18,11 +18,11 @@ vi.mock('react-router-dom', async () => {
         );
     return {
         ...router,
-        useNavigate: () => mockedUseNavigate,
+        useNavigate: () => mockedNavigate,
     };
 });
 
-test('test user card rendering', () => {
+test('test book card rendering', () => {
     const testBook = new Book(
         1,
         'Walter Isaacson',
@@ -38,7 +38,7 @@ test('test user card rendering', () => {
         </BrowserRouter>,
     );
 
-    const bookCard = screen.getByTestId('user-card');
+    const bookCard = screen.getByTestId('book-card');
     const removeButton = screen.getByTestId('remove-button');
 
     const userId = screen.getByText('Number: 1');
@@ -52,7 +52,7 @@ test('test user card rendering', () => {
     expect(userImage).toBeInTheDocument();
 });
 
-test('test user card remove method to be called', () => {
+test('test book card remove method', () => {
     const testUser = new Book(
         1,
         'Walter Isaacson',
@@ -68,11 +68,11 @@ test('test user card remove method to be called', () => {
         </BrowserRouter>,
     );
 
-    const bookCard = screen.getByTestId('user-card');
+    const bookCard = screen.getByTestId('book-card');
     const removeButton = screen.getByTestId('remove-button');
     fireEvent.click(removeButton);
     fireEvent.click(bookCard);
 
     expect(mockRemoveMethod.mock.calls.length).toBe(1);
-    expect(mockedUseNavigate).toBeCalledWith('/editUser/1');
+    expect(mockedNavigate).toBeCalledWith('/editBook/1');
 });

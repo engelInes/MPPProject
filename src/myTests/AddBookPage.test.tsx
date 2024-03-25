@@ -5,9 +5,9 @@ import {AddBookPage} from '../pages/Add Book Page/AddBookPage';
 import {BrowserRouter} from 'react-router-dom';
 import {BooksContextProvider} from '../context/BooksContext';
 
-const {mockedUseNavigate} = vi.hoisted(() => {
+const {mockedNavigate} = vi.hoisted(() => {
     return {
-        mockedUseNavigate: vi.fn(),
+        mockedNavigate: vi.fn(),
     };
 });
 
@@ -18,11 +18,11 @@ vi.mock('react-router-dom', async () => {
         );
     return {
         ...router,
-        useNavigate: () => mockedUseNavigate,
+        useNavigate: () => mockedNavigate,
     };
 });
 
-test('test add user page rendering', () => {
+test('test add book page rendering', () => {
     render(
         <BrowserRouter>
             <AddBookPage />
@@ -36,7 +36,7 @@ test('test add user page rendering', () => {
     expect(addUserButton).toBeInTheDocument();
 });
 
-test('test add user page add button without form data', () => {
+test('test add book page add button without form data', () => {
     window.alert = vi.fn();
 
     render(
@@ -49,10 +49,10 @@ test('test add user page add button without form data', () => {
 
     fireEvent.click(addUserButton);
 
-    expect(mockedUseNavigate.mock.calls.length).toBe(0);
+    expect(mockedNavigate.mock.calls.length).toBe(0);
 });
 
-test('test add user page add button with form data', () => {
+test('test add book page add button with form data', () => {
     window.alert = vi.fn();
 
     render(
@@ -105,5 +105,5 @@ test('test add user page add button with form data', () => {
 
     fireEvent.click(addUserButton);
 
-    expect(mockedUseNavigate).toBeCalledWith('/');
+    expect(mockedNavigate).toBeCalledWith('/');
 });

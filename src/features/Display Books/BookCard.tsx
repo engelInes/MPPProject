@@ -12,13 +12,13 @@ export function BookCard({
     const navigate = useNavigate();
 
     const handleCardOnClick = () => {
-        navigate('/editUser/' + givenBook.getId());
+        navigate('/editBook/' + givenBook.getId());
     };
 
     return (
         <div
             className='card'
-            data-testid='user-card'
+            data-testid='book-card'
             onClick={handleCardOnClick}
         >
             <button

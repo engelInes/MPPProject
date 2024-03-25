@@ -94,6 +94,7 @@ export function EditBookPage() {
 
                 <Button
                     type='submit'
+                    data_test_id='edit-user-button'
                     buttonMessage='Edit Book'
                     onClick={handleOnClickWrapper}
                 />

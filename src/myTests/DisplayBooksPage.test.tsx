@@ -6,7 +6,7 @@ import { DisplayBooksPage } from '../pages/DIsplay Data Page/DisplayBooksPage';
 import {BooksContextProvider} from '../context/BooksContext';
 import {Book} from '../models/Book';
 
-test('test display users page render', () => {
+test('test display books page render', () => {
     render(
         <BooksContextProvider
             bookContext={{
@@ -21,7 +21,7 @@ test('test display users page render', () => {
         </BooksContextProvider>,
     );
 
-    const booksListDiv = screen.getByTestId('users-list');
+    const booksListDiv = screen.getByTestId('books-list');
 
     expect(booksListDiv.childNodes.length).toBe(1);
 });

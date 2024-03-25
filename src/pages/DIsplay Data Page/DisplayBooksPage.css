@@ -8,7 +8,7 @@
     justify-content: space-evenly;
 }
 
-.users-list {
+.books-list {
     flex: 1;
 
     display: flex;
@@ -21,7 +21,7 @@
     margin: 10px;
 }
 
-.add-user-button {
+.add-book-button {
     margin: 15px;
     color: white;
 
@@ -38,4 +38,9 @@
     cursor: pointer;
 
     box-shadow: 0px 0px 3px #bc053963;
+}
+
+.filter-section input{
+    border-radius: 10px;
+    border-color: red;
 }
