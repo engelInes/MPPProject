@@ -3,11 +3,13 @@ import {Book} from './models/Book';
 import {AddBookPage} from './pages/Add Book Page/AddBookPage';
 import {DisplayBooksPage} from './pages/DIsplay Data Page/DisplayBooksPage';
 
-import {useEffect, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {BooksContextProvider} from './context/BooksContext';
 import {EditBookPage} from './pages/Edit Book Page/EditBookPage';
 import { ChartPage } from './pages/Chart Page/ChartPage';
+import { PaginationContextProvider } from './context/PaginationContext';
+import LoadingPage from './pages/Loading Page/LoadingPage';
 
 let book1: Book = new Book(
     1,
@@ -65,6 +67,8 @@ let book8: Book = new Book(
     'Fictiune',
     'https://nemira.ro/media/catalog/product/cache/1/image/363x/040ec09b1e35df139433887a97daa66f/c/r/cristina-alger---sotia-bancherului_c1.jpg',
 );
+
+const pageSize=3;
 function App() {
     let [books, setBooks] = useState<Book[]>([book1, book2, book3, book4,book5, book6, book7, book8]);
 
@@ -82,6 +86,8 @@ function App() {
         console.log(books);
     });
 
+    let [currentBooks, setCurrentBooks]=useState<Book[]>(books.slice(0, pageSize));
+    let [currentPage, setCurrentPage]=useState<number>(1);
     return (
         <BooksContextProvider
             bookContext={{
@@ -90,17 +96,47 @@ function App() {
                 removeBook: removeBook,
             }}
         >
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<DisplayBooksPage />} />
-                    <Route path='/addBook' element={<AddBookPage />} />
-                    <Route
-                        path='/editBook/:bookId'
-                        element={<EditBookPage />}
-                    />
-                    <Route path='/charts' element={<ChartPage />} />
-                </Routes>
-            </BrowserRouter>
+            <PaginationContextProvider
+                paginationContext={{
+                    currentBooks,
+                    setCurrentBooks,
+                    currentPage,
+                    setCurrentPage,
+                    pageSize: pageSize,
+                }}
+            >
+                <BrowserRouter>
+                    <Routes>
+                        <Route path='/loading' element={<LoadingPage />} />
+                        <Route
+                            path='/'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <DisplayBooksPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path='/addBook'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <AddBookPage />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path='/editBook/:bookId'
+                            element={
+                                <Suspense fallback={<LoadingPage />}>
+                                    <EditBookPage />
+                                </Suspense>
+                            }
+                        />
+                        <Route path='/charts' element={<ChartPage />} />
+                    </Routes>
+                </BrowserRouter>
+            </PaginationContextProvider>
         </BooksContextProvider>
     );
 }
