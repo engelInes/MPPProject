@@ -6,7 +6,7 @@ import {configDefaults} from 'vitest/config';
 export default defineConfig({
     plugins: [react()],
     server: {
-        port: 3000,
+        port: 5000,
     },
     test: {
         globals: true,

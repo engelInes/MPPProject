@@ -19,11 +19,11 @@ function setFormEntriesForBook(
     if (givenBook !== undefined) {
         formEntries[0].disabled = true;
 
-        formEntries[0].defaultValue = givenBook.getId().toString();
-        formEntries[1].defaultValue = givenBook.getTitle();
-        formEntries[2].defaultValue = givenBook.getAuthor();
-        formEntries[3].defaultValue = givenBook.getGenre();
-        formEntries[4].defaultValue = givenBook.getPictureUrl();
+        formEntries[0].defaultValue = givenBook.id.toString();
+        formEntries[1].defaultValue = givenBook.title;
+        formEntries[2].defaultValue = givenBook.author;
+        formEntries[3].defaultValue = givenBook.genre;
+        formEntries[4].defaultValue = givenBook.pictureUrl;
     }
 
     return formEntries;

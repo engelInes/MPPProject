@@ -45,3 +45,13 @@
     border-radius: 10px;
     border-color: red;
 }
+
+.filter-fields{
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding and border in the width */
+    font-size: 16px; /* Font size */
+    color: #333;
+}

@@ -6,7 +6,7 @@ import {Book} from '../../models/Book';
 
 import {useContext, useRef} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-
+import axios from 'axios';
 function handleOnClick(
     idInput: React.RefObject<HTMLInputElement>,
     titleInput: React.RefObject<HTMLInputElement>,
@@ -60,7 +60,7 @@ export function EditBookPage() {
     }
 
     const givenBook = booksContext.books.find(
-        (book: Book) => book.getId() === parseInt(bookId),
+        (book: Book) => book.id === parseInt(bookId),
     );
     const handleOnClickWrapper = () => {
         try {
@@ -71,10 +71,33 @@ export function EditBookPage() {
                 genreInput,
                 urlInput,
             );
-            booksContext.removeBook(newBook.getId());
-            booksContext.addBook(newBook);
+            //     booksContext.removeBook(newBook.getId());
+            //     booksContext.addBook(newBook);
 
-            navigate('/');
+            //     navigate('/');
+            // } catch (error) {
+            //     alert(error);
+            axios
+                .put(
+                    `http://localhost:3000/api/books/${newBook.id}`,
+                    newBook,
+                )
+                .then((response) => {
+                    booksContext.removeBook(newBook.id);
+                    booksContext.addBook(
+                        new Book(
+                            response.data.id,
+                            response.data.title,
+                            response.data.author,
+                            response.data.genre,
+                            response.data.image,
+                        ),
+                    );
+                    navigate('/');
+                })
+                .catch((error) => {
+                    console.error('Error updating book:', error);
+                });
         } catch (error) {
             alert(error);
         }

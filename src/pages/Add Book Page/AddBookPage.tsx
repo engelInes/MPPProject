@@ -1,4 +1,3 @@
-import {Button} from '../../components/button/Button';
 import {Layout} from '../../components/layout/Layout';
 import {BookForm} from '../../features/CRUD/Book Form/BookForm';
 import {Book} from '../../models/Book';
@@ -6,8 +5,8 @@ import {Book} from '../../models/Book';
 import {useContext, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import axios from 'axios';
 import {BooksContext} from '../../context/BooksContext';
-
 import './AddBookPage.css';
 
 function handleOnClick(
@@ -49,17 +48,25 @@ export function AddBookPage() {
 
     const handleOnClickWrapper = () => {
         try {
-            const inputUser = handleOnClick(
+            const inputBook = handleOnClick(
                 idInput,
                 titleInput,
                 authorInput,
                 genreInput,
                 urlInput,
             );
-            booksContext.addBook(inputUser);
-            navigate('/');
+
+            axios
+                .post('http://localhost:3000/api/addBook', inputBook)
+                .then((response) => {
+                    booksContext.addBook(response.data);
+                    navigate('/');
+                })
+                .catch((error) => {
+                    console.error('Error adding book:', error);
+                });
         } catch (error) {
-            alert(error);
+            console.error('Error handling input:', error);
         }
     };
 
@@ -80,12 +87,13 @@ export function AddBookPage() {
                     data-testid='book-form'
                 />
 
-                <Button
+                <button
                     type='submit'
-                    buttonMessage='Add book'
                     className='form-button'
                     onClick={handleOnClickWrapper}
-                />
+                >
+                    Add book
+                </button>
             </div>
         </Layout>
     );
