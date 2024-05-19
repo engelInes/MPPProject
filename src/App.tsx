@@ -8,8 +8,10 @@ import {useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {BooksContextProvider} from './context/BooksContext';
 import {ChartPage} from './pages/Chart Page/ChartPage';
+import {CriticsList} from './pages/Critics Page/CriticsList';
 import {EditBookPage} from './pages/Edit Book Page/EditBookPage';
-
+import Login from './pages/Login page/LoginPage';
+import Signup from './pages/Sign Up Page/SignUp';
 const booksList: Book[] = [];
 function App() {
     const [books, setBooks] = useState<Book[]>(booksList);
@@ -93,6 +95,8 @@ function App() {
         >
             <BrowserRouter>
                 <Routes>
+                    <Route path='/signup' element={<Signup />} />
+                    <Route path='/login' element={<Login />} />
                     <Route path='/' element={<DisplayBooksPage />} />
                     <Route path='/books' element={<DisplayBooksPage />} />
                     <Route path='/addBook' element={<AddBookPage />} />
@@ -101,6 +105,10 @@ function App() {
                         element={<EditBookPage />}
                     />
                     <Route path='/charts' element={<ChartPage />} />
+                    <Route
+                        path='/seeCritics/:bookId'
+                        element={<CriticsList />}
+                    />
                 </Routes>
             </BrowserRouter>
         </BooksContextProvider>

@@ -10,6 +10,9 @@ export function BookCard({givenBook, removeMethod}: BookCardPropsType) {
     const handleCardOnClick = () => {
         navigate('/editBook/' + givenBook.id);
     };
+    const seeCriticsOnClick = () => {
+        navigate(`/seeCritics/${givenBook.id}`);
+    };
     const handleRemoveClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         axios
@@ -26,7 +29,7 @@ export function BookCard({givenBook, removeMethod}: BookCardPropsType) {
         <div
             className='card'
             data-testid='book-card'
-            onClick={handleCardOnClick}
+            //onClick={handleCardOnClick}
         >
             <button
                 className='remove-button'
@@ -53,6 +56,12 @@ export function BookCard({givenBook, removeMethod}: BookCardPropsType) {
                     <div className='author'>Author: {givenBook.author}</div>
                     <div className='genre'>Genre: {givenBook.genre}</div>
                 </div>
+                <a className='editButton' onClick={handleCardOnClick}>
+                    Update
+                </a>
+                <a className='seeReviewsButton' onClick={seeCriticsOnClick}>
+                    Critics
+                </a>
             </div>
         </div>
     );

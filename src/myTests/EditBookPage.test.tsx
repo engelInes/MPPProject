@@ -1,4 +1,4 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {expect, test, vi} from 'vitest';
 import {BooksContextProvider} from '../context/BooksContext';
@@ -29,7 +29,15 @@ test('test rendering of edit book page', () => {
     render(
         <BooksContextProvider
             bookContext={{
-                books: [new Book(1, 'Walter Isaacson', 'Leonardo Da Vinci','biografie','sergiu.jpeg')],
+                books: [
+                    new Book(
+                        1,
+                        'Walter Isaacson',
+                        'Leonardo Da Vinci',
+                        'biografie',
+                        'sergiu.jpeg',
+                    ),
+                ],
                 addBook: vi.fn(),
                 removeBook: vi.fn(),
             }}
@@ -53,7 +61,15 @@ test('test rendering of edit book page with invalid bookId', () => {
     render(
         <BooksContextProvider
             bookContext={{
-                books: [new Book(1, 'Walter Isaacson', 'Leonardo Da Vinci','biografie','sergiu.jpeg')],
+                books: [
+                    new Book(
+                        1,
+                        'Walter Isaacson',
+                        'Leonardo Da Vinci',
+                        'biografie',
+                        'sergiu.jpeg',
+                    ),
+                ],
                 addBook: vi.fn(),
                 removeBook: vi.fn(),
             }}

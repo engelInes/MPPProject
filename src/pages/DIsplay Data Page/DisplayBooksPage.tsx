@@ -1,14 +1,15 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 
 //import {Button} from '../../components/button/Button';
+import {useNavigate} from 'react-router-dom';
+import {useIsOnline} from 'react-use-is-online';
 import {Layout} from '../../components/layout/Layout';
 import {BooksContext} from '../../context/BooksContext';
 import {BookCard} from '../../features/Display Books/BookCard';
 import {Book} from '../../models/Book';
 import './DisplayBooksPage.css';
-import {useIsOnline} from 'react-use-is-online';
 
-const booksPerPage=4;
+const booksPerPage = 4;
 
 export function DisplayBooksPage() {
     document.title = 'My Library';
@@ -18,9 +19,11 @@ export function DisplayBooksPage() {
     //let [showNext, setShowNext] = useState<boolean>(true);
     //const paginationContext = useContext(PaginationContext)!;
     const booksContext = useContext(BooksContext)!;
-    const [displayedBooks, setDisplayedBooks]=useState(booksPerPage);
+    const [displayedBooks, setDisplayedBooks] = useState(booksPerPage);
     let booksArray: Book[] = booksContext.books;
     const removeMethod = booksContext.removeBook;
+
+    const navigate = useNavigate();
 
     // let currentBook: Book[] = paginationContext.currentBooks;
     // let setCurrentPage = paginationContext.setCurrentPage;
@@ -28,19 +31,26 @@ export function DisplayBooksPage() {
     // let currentPage = paginationContext.currentPage;
     // let pageSize = paginationContext.pageSize;
 
-    const filteredBooksList = booksArray.filter(book =>
-        book.author.toLowerCase().includes(filterValue.toLowerCase())
-    ).sort((book1, book2)=>book1.author.localeCompare(book2.author));
+    const filteredBooksList = booksArray
+        .filter((book) =>
+            book.author.toLowerCase().includes(filterValue.toLowerCase()),
+        )
+        .sort((book1, book2) => book1.author.localeCompare(book2.author));
 
-    const currentBooks=filteredBooksList.slice(0, displayedBooks);
+    const currentBooks = filteredBooksList.slice(0, displayedBooks);
 
     const onFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilterValue(event.target.value);
         setDisplayedBooks(booksPerPage);
     };
-    const handleShowMore=()=>{
-        setDisplayedBooks(prevDisplayedBooks=>Math.min(prevDisplayedBooks+booksPerPage, filteredBooksList.length));
-    }
+    const handleShowMore = () => {
+        setDisplayedBooks((prevDisplayedBooks) =>
+            Math.min(
+                prevDisplayedBooks + booksPerPage,
+                filteredBooksList.length,
+            ),
+        );
+    };
     // useEffect(() => {
     //     currentBook.sort((firstBook, secondBook) => {
     //         return firstBook.getId() - secondBook.getId();
@@ -69,7 +79,7 @@ export function DisplayBooksPage() {
     //     setCurrentBooks(nextPage);
     //     setCurrentPage(currentPage + 1);
     // };
-    const{isOnline, isOffline, error}=useIsOnline();
+    const {isOnline, isOffline} = useIsOnline();
     // useEffect(() => {
     //     const handleStatusChange=()=>{
     //         setIsOnline(navigator.onLine);
@@ -146,14 +156,23 @@ export function DisplayBooksPage() {
                         <div className='show-more-container'>
                             <span>{`${displayedBooks} out of ${filteredBooksList.length}`}</span>
                             {/* <button className='show-more-button' onClick={handleShowMore}>Show more books</button> */}
-                            <button className='show-more-button' onClick={handleShowMore}>Show more</button>
+                            <button
+                                className='show-more-button'
+                                onClick={handleShowMore}
+                            >
+                                Show more
+                            </button>
                         </div>
                     )}
+                    <button
+                        className='login-button'
+                        onClick={() => navigate('/login')}
+                    >
+                        Logout
+                    </button>
                 </div>
             )}
-            {isOffline && (
-                <h1>Offline</h1>
-            )}
+            {isOffline && <h1>Offline</h1>}
         </Layout>
     );
 }
